@@ -2,28 +2,36 @@ import Foundation
 
 import SpriteKit
 
-public class SceneLoader {
+class SceneLoader {
     
-    private let sceneWidth: CGFloat = 640
-    private let sceneHeight: CGFloat = 480
+    private(set) var sceneWidth: CGFloat
+    private(set) var sceneHeight: CGFloat
     
-    public init() {}
+    init(sceneWidth: CGFloat, sceneHeight: CGFloat) {
+        self.sceneWidth = sceneWidth
+        self.sceneHeight = sceneHeight
+    }
     
-    public func loadScene(named: String) -> SKView? {
+    func loadScene(sceneSequence: SceneSequence, delegate: SceneCompletionDelegate) -> SKView? {
         
-        guard let scene = GameScene(fileNamed: named) else {
-            return nil
+        var gameScene: GameScene?
+
+        switch sceneSequence {
+        case .opening:
+            gameScene = OpeningScene(size: CGSize(width: self.sceneWidth, height: self.sceneHeight))
         }
         
         // Load the SKScene from 'GameScene.sks'
         let sceneView: SKView = SKView(frame: CGRect(x:0 , y:0, width: self.sceneWidth, height: self.sceneHeight))
 
         // Set the scale mode to scale to fit the window
-        scene.scaleMode = .aspectFill
-        
+        (gameScene as? SKScene)?.scaleMode = .aspectFill
+
+        gameScene?.gameSceneDelegate = delegate
+
         // Present the scene
-        sceneView.presentScene(scene)
-        
+        sceneView.presentScene((gameScene as? SKScene))
+
         return sceneView
     }
 }

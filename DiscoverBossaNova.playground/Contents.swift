@@ -3,14 +3,9 @@
 import PlaygroundSupport
 import SpriteKit
 
-enum Scenes: String {
-    case opening = "OpeningScene"
-}
+let sceneController: SceneController = SceneController(page: PlaygroundPage.current)
 
-if let sceneView: SKView = SceneLoader().loadScene(named: Scenes.opening.rawValue) {
-    PlaygroundSupport.PlaygroundPage.current.liveView = sceneView
-}
-
+sceneController.start()
 
 
 
