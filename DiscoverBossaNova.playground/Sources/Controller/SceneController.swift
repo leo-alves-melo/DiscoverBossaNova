@@ -35,11 +35,19 @@ public class SceneController: SceneCompletionDelegate {
     }
     
     private func nextScene() {
+        
+        var nextScene: SceneSequence = .opening
+        
         switch self.currentScene {
         case .opening:
-            self.currentScene = .opening
-            self.loadScene(sequence: .opening)
+            nextScene = .introduction
+            
+        case .introduction:
+            nextScene = .opening
         }
+        
+        self.currentScene = nextScene
+        self.loadScene(sequence: nextScene)
     }
     
     // MARK: - Protocol Methods

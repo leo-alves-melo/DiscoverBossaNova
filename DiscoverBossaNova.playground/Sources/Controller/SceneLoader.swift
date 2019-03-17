@@ -19,6 +19,8 @@ class SceneLoader {
         switch sceneSequence {
         case .opening:
             gameScene = OpeningScene(size: CGSize(width: self.sceneWidth, height: self.sceneHeight))
+        case .introduction:
+            gameScene = IntroductionScene(size: CGSize(width: self.sceneWidth, height: self.sceneHeight))
         }
         
         // Load the SKScene from 'GameScene.sks'
