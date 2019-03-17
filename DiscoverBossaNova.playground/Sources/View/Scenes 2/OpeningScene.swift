@@ -1,17 +1,20 @@
 import SpriteKit
 
-public class GameScene: SKScene {
+public class OpeningScene: SKScene {
     
-    private var label : SKLabelNode!
-    private var spinnyNode : SKShapeNode!
+    private var label: SKLabelNode!
+    private var spinnyNode: SKShapeNode!
+    
+    private let openingDuration: Double = 5.0
+    private let closingDuration: Double = 2.0
     
     public override func didMove(to view: SKView) {
         // Get label node from scene and store it for use later
-        label = childNode(withName: "//IntroductionLabel") as? SKLabelNode
-        label.alpha = 0.0
-        let fadeInOut = SKAction.sequence([.fadeIn(withDuration: 2.0),
-                                           .fadeOut(withDuration: 2.0)])
-        label.run(.repeatForever(fadeInOut))
+        self.label = childNode(withName: "//IntroductionLabel") as? SKLabelNode
+        self.label.alpha = 0.0
+        let fadeInOut = SKAction.sequence([.fadeIn(withDuration: self.openingDuration),
+                                           .fadeOut(withDuration: self.closingDuration)])
+        self.label.run(.repeatForever(fadeInOut))
         
         // Create shape node to use during mouse interaction
         let w = (size.width + size.height) * 0.05
