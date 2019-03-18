@@ -7,13 +7,24 @@ class IntroductionScene: SKScene, GameScene {
     private let textLabel: SKLabelNode = SKLabelNode(text: nil)
     private let background: SKSpriteNode = SKSpriteNode(imageNamed: "Background")
     private let textBackground: SKShapeNode = SKShapeNode()
+    private let nextButton: SKSpriteNode = SKSpriteNode(imageNamed: "NextButton")
     
     // MARK: - Properties
     
-    private var textList: [String] = ["Brazil is a country full of beauties"]
+    private var textList: [String] = ["Brazil is a country full of beauties",
+                                      "All these beauties inspired our artists in different ways",
+                                      "That’s when Bossa Nova was created, a new music style mixing Samba and Jazz"]
+    private var textListIndex: Int = 0
     private let openingDuration: Double = 2.0
     private let closingDuration: Double = 1.0
     var gameSceneDelegate: SceneCompletionDelegate?
+    
+    // MARK: - Enum
+    
+    private enum Buttons: String {
+        case next = "NextButton"
+    }
+    
     
     // MARK: - Life cycle
     
@@ -22,7 +33,21 @@ class IntroductionScene: SKScene, GameScene {
         self.setupBackground()
         self.setupTextBackground()
         self.setupLabel()
+        self.setupNextButton()
         
+    }
+    
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        for touch in touches {
+            let positionInScene = touch.location(in: self)
+            let touchedNode = self.atPoint(positionInScene)
+            if let nodeName: String = touchedNode.name, let button: Buttons = Buttons(rawValue: nodeName) {
+                switch button {
+                case .next:
+                    self.animateChangeLabel()
+                }
+            }
+        }
     }
     
     // MARK: - Private methods
@@ -44,6 +69,8 @@ class IntroductionScene: SKScene, GameScene {
         self.textLabel.text = self.textList[0]
         let fontName: String = UIFont.systemFont(ofSize: 18).fontName
         self.textLabel.fontName = fontName
+        self.textLabel.numberOfLines = 0
+        self.textLabel.preferredMaxLayoutWidth = self.textBackground.frame.size.width
         self.textLabel.fontSize = 17
         self.textLabel.verticalAlignmentMode = .center
         self.textLabel.horizontalAlignmentMode = .center
@@ -62,5 +89,30 @@ class IntroductionScene: SKScene, GameScene {
                                                                     height: 100), cornerRadius: 50).cgPath
         self.textBackground.fillColor = UIColor.white
         self.addChild(self.textBackground)
+    }
+    
+    private func setupNextButton() {
+        self.nextButton.size = CGSize(width: 100, height: 100)
+        self.nextButton.position = CGPoint(x: self.frame.width - 50 - 22, y: self.textBackground.position.y)
+        self.nextButton.name = Buttons.next.rawValue
+        self.addChild(self.nextButton)
+    }
+    
+    private func nextText() {
+        
+        self.textListIndex += 1
+        self.textLabel.text = self.textList[self.textListIndex]
+        
+        if self.textListIndex == self.textList.count - 1 {
+            self.nextButton.texture = SKTexture(imageNamed: "PlayButton")
+        }
+    }
+    
+    private func animateChangeLabel() {
+        let animation: SKAction = SKAction.sequence([.fadeOut(withDuration: 0.5),
+                                                     SKAction.run(self.nextText),
+                                                     .fadeIn(withDuration: 0.5)])
+        
+        self.textLabel.run(animation)
     }
 }
