@@ -2,21 +2,31 @@ import SpriteKit
 
 class IntroductionScene: SKScene, GameScene {
     
-    private let openingDuration: Double = 5.0
+    private let openingDuration: Double = 3.0
     private let closingDuration: Double = 2.0
     
     var gameSceneDelegate: SceneCompletionDelegate?
     
     override func didMove(to view: SKView) {
         // Get label node from scene and store it for use later
+        let background: SKSpriteNode = self.createBackground()
         
-        let labelNode: SKLabelNode = SKLabelNode(text: "Rio de Janeiro, 1962")
+        let backgroundActions: SKAction = SKAction.sequence([.fadeIn(withDuration: self.openingDuration)])
         
-        labelNode.alpha = 0.0
-        let fadeInOut = SKAction.sequence([.fadeIn(withDuration: self.openingDuration),
-                                           .fadeOut(withDuration: self.closingDuration)])
-        labelNode.position = CGPoint(x: self.frame.width/2, y: self.frame.height/2)
-        self.addChild(labelNode)
-        labelNode.run(fadeInOut)
+        background.run(backgroundActions)
+        
+        self.addChild(background)
+    }
+    
+    private func createBackground() -> SKSpriteNode {
+        let background: SKSpriteNode = SKSpriteNode(imageNamed: "Background")
+        
+        background.size = CGSize(width: self.frame.width, height: self.frame.height)
+        
+        background.position = CGPoint(x: self.frame.width/2, y: self.frame.height/2)
+        
+        background.alpha = 0.0
+        
+        return background
     }
 }
