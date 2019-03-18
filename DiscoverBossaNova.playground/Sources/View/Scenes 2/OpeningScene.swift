@@ -8,18 +8,38 @@ class OpeningScene: SKScene, GameScene {
     var gameSceneDelegate: SceneCompletionDelegate?
     
     override func didMove(to view: SKView) {
-        // Get label node from scene and store it for use later
 
+        let labelNode: SKLabelNode = self.createLabel()
+
+        let actions: SKAction = self.createActions()
+        
+        self.addChild(labelNode)
+        labelNode.run(actions)
+    }
+    
+    private func createLabel() -> SKLabelNode {
         let labelNode: SKLabelNode = SKLabelNode(text: "Rio de Janeiro, 1962")
         
         labelNode.fontSize = 20
         labelNode.fontName = "Courier"
-
-        labelNode.alpha = 0.0
-        let fadeInOut = SKAction.sequence([.fadeIn(withDuration: self.openingDuration),
-                                           .fadeOut(withDuration: self.closingDuration)])
         labelNode.position = CGPoint(x: self.frame.width/2, y: self.frame.height/2)
-        self.addChild(labelNode)
-        labelNode.run(fadeInOut)
+        labelNode.alpha = 0.0
+        
+        return labelNode
+    }
+    
+    private func createActions() -> SKAction {
+        let fadeInOut: SKAction = SKAction.sequence([.fadeIn(withDuration: self.openingDuration),
+                                                     .fadeOut(withDuration: self.closingDuration)])
+        
+        let finish: SKAction = SKAction.run(self.finishScene)
+        
+        let actions: SKAction = SKAction.sequence([fadeInOut, finish])
+        
+        return actions
+    }
+    
+    private func finishScene() {
+        self.gameSceneDelegate?.didComplete()
     }
 }
