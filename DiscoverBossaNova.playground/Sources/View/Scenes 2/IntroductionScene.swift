@@ -55,9 +55,9 @@ class IntroductionScene: SKScene, GameScene {
     private func setupTextBackground() {
 
         self.textBackground.alpha = 0.5
-        self.textBackground.position = CGPoint(x: self.frame.width/2 - 180, y: self.frame.height - 62)
-        self.textBackground.path = UIBezierPath(roundedRect: CGRect(x: -128,
-                                                                    y: -128,
+        self.textBackground.position = CGPoint(x: self.frame.width/2, y: self.frame.height - 62)
+        self.textBackground.path = UIBezierPath(roundedRect: CGRect(x: -180,
+                                                                    y: -50,
                                                                     width: 360,
                                                                     height: 100), cornerRadius: 50).cgPath
         self.textBackground.fillColor = UIColor.white
