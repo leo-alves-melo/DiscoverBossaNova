@@ -1,5 +1,5 @@
 import SpriteKit
 
 protocol SceneCompletionDelegate {
-    func didComplete()
+    func didComplete(with value: Double?)
 }

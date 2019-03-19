@@ -8,12 +8,14 @@ class IntroductionScene: SKScene, GameScene {
     private let background: SKSpriteNode = SKSpriteNode(imageNamed: "Background")
     private let textBackground: SKShapeNode = SKShapeNode()
     private let nextButton: SKSpriteNode = SKSpriteNode(imageNamed: "NextButton")
+    private let tomJobimImage: SKSpriteNode = SKSpriteNode(imageNamed: "TomJobim")
     
     // MARK: - Properties
     
     private var textList: [String] = ["Brazil is a country full of beauties",
                                       "All these beauties inspired our artists in different ways",
-                                      "That’s when Bossa Nova was created, a new music style mixing Samba and Jazz"]
+                                      "That’s when Bossa Nova was created, a new music style mixing Samba and Jazz",
+                                      "Helps Tom Jobim to compose \"Garota de Ipanema\" "]
     private var textListIndex: Int = 0
     private let openingDuration: Double = 2.0
     private let closingDuration: Double = 1.0
@@ -101,10 +103,15 @@ class IntroductionScene: SKScene, GameScene {
     private func nextText() {
         
         self.textListIndex += 1
-        self.textLabel.text = self.textList[self.textListIndex]
         
         if self.textListIndex == self.textList.count - 1 {
+            self.textLabel.text = self.textList[self.textListIndex]
             self.nextButton.texture = SKTexture(imageNamed: "PlayButton")
+            self.setupTomJobimImage()
+        } else if self.textListIndex == self.textList.count {
+            self.gameSceneDelegate?.didComplete(with: nil)
+        } else {
+            self.textLabel.text = self.textList[self.textListIndex]
         }
     }
     
@@ -114,5 +121,16 @@ class IntroductionScene: SKScene, GameScene {
                                                      .fadeIn(withDuration: 0.5)])
         
         self.textLabel.run(animation)
+    }
+    
+    private func setupTomJobimImage() {
+        self.tomJobimImage.position = CGPoint(x: (self.tomJobimImage.texture?.size().width ?? 1)/2,
+                                              y: (self.tomJobimImage.texture?.size().height ?? 1)/2)
+        
+        let fadeIn: SKAction = SKAction.fadeIn(withDuration: 0.5)
+        
+        self.tomJobimImage.run(fadeIn)
+        
+        self.addChild(self.tomJobimImage)
     }
 }

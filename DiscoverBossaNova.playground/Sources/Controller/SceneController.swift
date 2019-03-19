@@ -34,7 +34,7 @@ public class SceneController: SceneCompletionDelegate {
 
     }
     
-    private func nextScene() {
+    private func nextScene(value: Double?) {
         
         var nextScene: SceneSequence = .opening
         
@@ -52,7 +52,7 @@ public class SceneController: SceneCompletionDelegate {
     
     // MARK: - Protocol Methods
     
-    func didComplete() {
-        self.nextScene()
+    func didComplete(with value: Double?) {
+        self.nextScene(value: value)
     }
 }

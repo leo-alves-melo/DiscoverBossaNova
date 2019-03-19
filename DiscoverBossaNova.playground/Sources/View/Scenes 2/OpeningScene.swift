@@ -40,6 +40,6 @@ class OpeningScene: SKScene, GameScene {
     }
     
     private func finishScene() {
-        self.gameSceneDelegate?.didComplete()
+        self.gameSceneDelegate?.didComplete(with: nil)
     }
 }
