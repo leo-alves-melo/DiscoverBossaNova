@@ -41,8 +41,9 @@ public class SceneController: SceneCompletionDelegate {
         switch self.currentScene {
         case .opening:
             nextScene = .introduction
-            
         case .introduction:
+            nextScene = .playScene
+        case .playScene:
             nextScene = .opening
         }
         

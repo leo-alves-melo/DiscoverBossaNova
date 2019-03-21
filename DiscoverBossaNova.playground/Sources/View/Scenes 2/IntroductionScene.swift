@@ -78,18 +78,24 @@ class IntroductionScene: SKScene, GameScene {
         self.textLabel.horizontalAlignmentMode = .center
         self.textLabel.position = self.textBackground.position
         self.textLabel.fontColor = UIColor.black
+        
+        self.textLabel.alpha = 0.0
+        self.textLabel.run(SKAction.fadeIn(withDuration: self.openingDuration))
+        
         self.addChild(self.textLabel)
     }
     
     private func setupTextBackground() {
 
-        self.textBackground.alpha = 0.5
         self.textBackground.position = CGPoint(x: self.frame.width/2, y: self.frame.height - 62)
         self.textBackground.path = UIBezierPath(roundedRect: CGRect(x: -180,
                                                                     y: -50,
                                                                     width: 360,
                                                                     height: 100), cornerRadius: 50).cgPath
         self.textBackground.fillColor = UIColor.white
+        
+        self.textBackground.alpha = 0.0
+        self.textBackground.run(SKAction.fadeAlpha(by: 0.5, duration: self.openingDuration))
         self.addChild(self.textBackground)
     }
     
@@ -97,6 +103,8 @@ class IntroductionScene: SKScene, GameScene {
         self.nextButton.size = CGSize(width: 100, height: 100)
         self.nextButton.position = CGPoint(x: self.frame.width - 50 - 22, y: self.textBackground.position.y)
         self.nextButton.name = Buttons.next.rawValue
+        self.nextButton.alpha = 0.0
+        self.nextButton.run(SKAction.fadeIn(withDuration: self.openingDuration))
         self.addChild(self.nextButton)
     }
     
@@ -127,7 +135,8 @@ class IntroductionScene: SKScene, GameScene {
         self.tomJobimImage.position = CGPoint(x: (self.tomJobimImage.texture?.size().width ?? 1)/2,
                                               y: (self.tomJobimImage.texture?.size().height ?? 1)/2)
         
-        let fadeIn: SKAction = SKAction.fadeIn(withDuration: 0.5)
+        self.tomJobimImage.alpha = 0.0
+        let fadeIn: SKAction = SKAction.fadeIn(withDuration: self.openingDuration)
         
         self.tomJobimImage.run(fadeIn)
         
