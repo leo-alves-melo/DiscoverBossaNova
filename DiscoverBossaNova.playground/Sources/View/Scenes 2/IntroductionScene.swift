@@ -9,6 +9,7 @@ class IntroductionScene: SKScene, GameScene {
     private let textBackground: SKShapeNode = SKShapeNode()
     private let nextButton: SKSpriteNode = SKSpriteNode(imageNamed: "NextButton")
     private let tomJobimImage: SKSpriteNode = SKSpriteNode(imageNamed: "TomJobim")
+    private let sound = SKAction.playSoundFileNamed("Cena1.m4a", waitForCompletion: false)
     
     // MARK: - Properties
     
@@ -30,7 +31,7 @@ class IntroductionScene: SKScene, GameScene {
     // MARK: - Life cycle
     
     override func didMove(to view: SKView) {
-
+        self.setupSound()
         self.setupBackground()
         self.setupTextBackground()
         self.setupLabel()
@@ -52,6 +53,10 @@ class IntroductionScene: SKScene, GameScene {
     }
     
     // MARK: - Private methods
+    
+    private func setupSound() {
+        self.run(self.sound)
+    }
     
     private func createBackground() {
         self.background.size = CGSize(width: self.frame.width, height: self.frame.height)
