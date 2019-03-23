@@ -7,36 +7,48 @@ class PlayScene: SKScene, GameScene {
     private let background: SKSpriteNode = SKSpriteNode(imageNamed: "Background")
     private let tomJobimImage: SKSpriteNode = SKSpriteNode(imageNamed: "TomJobim")
     private let board: SKSpriteNode = SKSpriteNode(imageNamed: "Board")
-    
-    private let buttonsYPosition: CGFloat = 52
-    
     private let greenButton: SKSpriteNode = SKSpriteNode(imageNamed: "GreenButton")
     private let yellowButton: SKSpriteNode = SKSpriteNode(imageNamed: "YellowButton")
     private let blueButton: SKSpriteNode = SKSpriteNode(imageNamed: "BlueButton")
+    private let scoreLabel: SKLabelNode = SKLabelNode(text: "0")
     
+    // MARK: - Properties
+    
+    var gameSceneDelegate: SceneCompletionDelegate?
+    private let openingDuration: Double = 1.0
+    private let buttonsYPosition: CGFloat = 52
     private var greenButtonXPosition: CGFloat = 0
     private var yellowButtonXPosition: CGFloat = 0
     private var blueButtonXPosition: CGFloat = 0
     
     private var score: Int = 0
     
-    // MARK: - Properties
+    private var timeToGoThroughBoard: TimeInterval = 5.0
     
-    var gameSceneDelegate: SceneCompletionDelegate?
-    private let openingDuration: Double = 1.0
+    private var playableNotes: [SKSpriteNode] = []
+    
+    // MARK: - Enum
+    
+    private enum Notes {
+        case green
+        case yellow
+        case blue
+    }
     
     // MARK: - Life cycle
     
     override func didMove(to view: SKView) {
-        self.createBackground()
+        self.setupBackground()
         self.setupTomJobimImage()
         self.setupBoard()
         self.setupBoardButtons()
+        self.setupScore()
+        self.setupNotesSequence()
     }
     
     // MARK: - Private methods
     
-    private func createBackground() {
+    private func setupBackground() {
         self.backgroundColor = UIColor.white
         
         self.background.size = CGSize(width: self.frame.width + 2, height: self.frame.height + 2)
@@ -84,7 +96,7 @@ class PlayScene: SKScene, GameScene {
         self.yellowButton.position = CGPoint(x: self.yellowButtonXPosition,
                                              y: self.buttonsYPosition)
         
-        self.blueButtonXPosition = 2*46 + 317 + 5*self.blueButton.size.width/2
+        self.blueButtonXPosition = 2*46 + 315 + 5*self.blueButton.size.width/2
         self.blueButton.position = CGPoint(x: self.blueButtonXPosition,
                                            y: self.buttonsYPosition)
         
@@ -94,5 +106,57 @@ class PlayScene: SKScene, GameScene {
         
     }
     
+    private func createNote(at xPosition: CGFloat, noteNode: SKSpriteNode) {
+        
+        noteNode.position = CGPoint(x: xPosition, y: self.size.height + noteNode.size.height)
+        self.playableNotes.append(noteNode)
+        
+        noteNode.run(SKAction.moveTo(y: -noteNode.size.height, duration: self.timeToGoThroughBoard))
+        
+        self.addChild(noteNode)
+        
+    }
     
+    private func create(note: Notes) {
+        switch note {
+        case .green:
+            self.createNote(at: self.greenButtonXPosition,
+                            noteNode: SKSpriteNode(imageNamed: "ScrollableGreenButton"))
+        case .yellow:
+            self.createNote(at: self.yellowButtonXPosition,
+                            noteNode: SKSpriteNode(imageNamed: "ScrollableYellowButton"))
+        case .blue:
+            self.createNote(at: self.blueButtonXPosition,
+                            noteNode: SKSpriteNode(imageNamed: "ScrollableBlueButton"))
+        }
+    }
+    
+    private func setupNotesSequence() {
+        
+    }
+    
+    private func setupScore() {
+        let scoreBackground: SKSpriteNode = SKSpriteNode(imageNamed: "ScoreBackground")
+        scoreBackground.position = CGPoint(x: 66 + scoreBackground.size.width/2,
+                                           y: 360 + scoreBackground.size.height/2)
+        
+        self.addChild(scoreBackground)
+        
+        let scoreTitleLabel: SKLabelNode = SKLabelNode(text: "Score")
+        scoreTitleLabel.fontColor = UIColor.white
+        scoreTitleLabel.position = CGPoint(x: scoreBackground.position.x,
+                                           y: scoreBackground.position.y + 10)
+        scoreTitleLabel.fontName = UIFont.systemFont(ofSize: 35,
+                                                     weight: .bold).fontName
+        
+        self.addChild(scoreTitleLabel)
+        
+        self.scoreLabel.fontName = UIFont.systemFont(ofSize: 35,
+                                                      weight: .bold).fontName
+        self.scoreLabel.fontColor = UIColor.white
+        self.scoreLabel.position = CGPoint(x: scoreBackground.position.x,
+                                           y: scoreBackground.position.y - 30)
+        
+        self.addChild(self.scoreLabel)
+    }
 }
