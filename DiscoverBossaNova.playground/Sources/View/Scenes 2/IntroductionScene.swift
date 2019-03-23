@@ -18,7 +18,6 @@ class IntroductionScene: SKScene, GameScene {
                                       "Helps Tom Jobim to compose \"Garota de Ipanema\" "]
     private var textListIndex: Int = 0
     private let openingDuration: Double = 2.0
-    private let closingDuration: Double = 1.0
     var gameSceneDelegate: SceneCompletionDelegate?
     
     // MARK: - Enum
@@ -72,7 +71,7 @@ class IntroductionScene: SKScene, GameScene {
         let fontName: String = UIFont.systemFont(ofSize: 18).fontName
         self.textLabel.fontName = fontName
         self.textLabel.numberOfLines = 0
-        self.textLabel.preferredMaxLayoutWidth = self.textBackground.frame.size.width
+        self.textLabel.preferredMaxLayoutWidth = self.textBackground.frame.size.width - 20
         self.textLabel.fontSize = 17
         self.textLabel.verticalAlignmentMode = .center
         self.textLabel.horizontalAlignmentMode = .center
@@ -132,11 +131,16 @@ class IntroductionScene: SKScene, GameScene {
     }
     
     private func setupTomJobimImage() {
-        self.tomJobimImage.position = CGPoint(x: (self.tomJobimImage.texture?.size().width ?? 1)/2,
-                                              y: (self.tomJobimImage.texture?.size().height ?? 1)/2)
+        self.tomJobimImage.position = CGPoint(x: (self.tomJobimImage.texture?.size().width ?? 1)/4,
+                                              y: (self.tomJobimImage.texture?.size().height ?? 1)/4)
+        
+        self.tomJobimImage.size = CGSize(width: (self.tomJobimImage.texture?.size().width ?? 1)/2,
+                                         height: (self.tomJobimImage.texture?.size().height ?? 1)/2)
         
         self.tomJobimImage.alpha = 0.0
         let fadeIn: SKAction = SKAction.fadeIn(withDuration: self.openingDuration)
+        
+        
         
         self.tomJobimImage.run(fadeIn)
         
