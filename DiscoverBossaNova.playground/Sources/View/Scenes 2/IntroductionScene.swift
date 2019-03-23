@@ -41,8 +41,8 @@ class IntroductionScene: SKScene, GameScene {
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         for touch in touches {
-            let positionInScene = touch.location(in: self)
-            let touchedNode = self.atPoint(positionInScene)
+            let positionInScene: CGPoint = touch.location(in: self)
+            let touchedNode: SKNode = self.atPoint(positionInScene)
             if let nodeName: String = touchedNode.name, let button: Buttons = Buttons(rawValue: nodeName) {
                 switch button {
                 case .next:

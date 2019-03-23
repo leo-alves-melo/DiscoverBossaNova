@@ -11,6 +11,7 @@ class PlayScene: SKScene, GameScene {
     private let yellowButton: SKSpriteNode = SKSpriteNode(imageNamed: "YellowButton")
     private let blueButton: SKSpriteNode = SKSpriteNode(imageNamed: "BlueButton")
     private let scoreLabel: SKLabelNode = SKLabelNode(text: "0")
+    //private let song = SKAction.playSoundFileNamed("GarotaDeIpanema.m4a", waitForCompletion: false)
     
     // MARK: - Properties
     
@@ -25,7 +26,7 @@ class PlayScene: SKScene, GameScene {
     
     private var timeToGoThroughBoard: TimeInterval = 5.0
     
-    private var playableNotes: [SKSpriteNode] = []
+    private var playableNotes: [SKNode] = []
     
     // MARK: - Enum
     
@@ -44,6 +45,15 @@ class PlayScene: SKScene, GameScene {
         self.setupBoardButtons()
         self.setupScore()
         self.setupNotesSequence()
+    }
+    
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        for touch in touches {
+            let positionInScene: CGPoint = touch.location(in: self)
+            let touchedNode: SKNode = self.atPoint(positionInScene)
+            
+            self.validate(touchedNode: touchedNode)
+        }
     }
     
     // MARK: - Private methods
@@ -132,6 +142,10 @@ class PlayScene: SKScene, GameScene {
     }
     
     private func setupNotesSequence() {
+        self.create(note: .green)
+    }
+    
+    private func setupSong() {
         
     }
     
@@ -158,5 +172,20 @@ class PlayScene: SKScene, GameScene {
                                            y: scoreBackground.position.y - 30)
         
         self.addChild(self.scoreLabel)
+    }
+    
+    private func increaseScore() {
+        self.score += 10
+        self.scoreLabel.text = "\(self.score)"
+    }
+    
+    private func validate(touchedNode: SKNode) {
+        if self.playableNotes.contains(touchedNode) {
+            if touchedNode.position.y < self.buttonsYPosition + self.blueButton.size.height/2,
+                touchedNode.position.y > self.buttonsYPosition - self.blueButton.size.height/2 {
+                self.increaseScore()
+                touchedNode.removeFromParent()
+            }
+        }
     }
 }
