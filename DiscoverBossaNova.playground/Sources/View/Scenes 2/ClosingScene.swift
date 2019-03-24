@@ -14,8 +14,8 @@ class ClosingScene: SKScene, GameScene {
     
     // MARK: - Properties
     
-    private var textList: [String] = ["It became the second most recovered song of all time! Frank Sinatra, Amy Winehouse and Madonna had versions of it",
-                                      "\"Medicine, law, business, engineering, these are noble pursuits and necessary to sustain life. But poetry, beauty, romance, love, these are what we stay alive for\", Dead Poets Society",
+    private var textList: [String] = ["It became the second most covered song of all time! Frank Sinatra, Amy Winehouse and Madonna had versions of it",
+                                      "\"Medicine, law, engineering, these are necessary to sustain life. But poetry, beauty, romance, love, these are what we stay alive for\", Dead Poets Society",
                                       "Play again?"]
     private var textListIndex: Int = 0
     private let openingDuration: Double = 2.0
