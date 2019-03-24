@@ -12,7 +12,9 @@ class SceneLoader {
         self.sceneHeight = sceneHeight
     }
     
-    func loadScene(sceneSequence: SceneSequence, delegate: SceneCompletionDelegate) -> SKView? {
+    func loadScene(sceneSequence: SceneSequence,
+                   with value: Double?,
+                   delegate: SceneCompletionDelegate) -> SKView? {
         
         var gameScene: GameScene?
 
@@ -23,9 +25,11 @@ class SceneLoader {
             gameScene = IntroductionScene(size: CGSize(width: self.sceneWidth, height: self.sceneHeight))
         case .playScene:
             gameScene = PlayScene(size: CGSize(width: self.sceneWidth, height: self.sceneHeight))
+        case .closing:
+            gameScene = ClosingScene(size: CGSize(width: self.sceneWidth, height: self.sceneHeight),
+                                     score: value ?? 0)
         }
         
-        // Load the SKScene from 'GameScene.sks'
         let sceneView: SKView = SKView(frame: CGRect(x:0 , y:0, width: self.sceneWidth, height: self.sceneHeight))
 
         // Set the scale mode to scale to fit the window

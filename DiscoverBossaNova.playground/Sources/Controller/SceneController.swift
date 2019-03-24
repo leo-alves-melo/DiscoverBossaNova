@@ -3,6 +3,8 @@ import PlaygroundSupport
 
 public class SceneController: SceneCompletionDelegate {
     
+    // MARK: - Properties
+    
     private let sceneLoader: SceneLoader = SceneLoader(sceneWidth: 640, sceneHeight: 480)
     
     private var currentScene: SceneSequence = SceneSequence.opening
@@ -19,13 +21,14 @@ public class SceneController: SceneCompletionDelegate {
     
     public func start() {
         
-        self.loadScene(sequence: .opening)
+        self.loadScene(sequence: .opening, with: nil)
     }
     
     // MARK: - Private Methods
     
-    private func loadScene(sequence: SceneSequence) {
+    private func loadScene(sequence: SceneSequence, with value: Double?) {
         guard let scene: SKView = self.sceneLoader.loadScene(sceneSequence: sequence,
+                                                             with: value,
                                                              delegate: self) else {
                                                                 return
         }
@@ -44,11 +47,13 @@ public class SceneController: SceneCompletionDelegate {
         case .introduction:
             nextScene = .playScene
         case .playScene:
-            nextScene = .opening
+            nextScene = .closing
+        case .closing:
+            nextScene = .playScene
         }
         
         self.currentScene = nextScene
-        self.loadScene(sequence: nextScene)
+        self.loadScene(sequence: nextScene, with: value)
     }
     
     // MARK: - Protocol Methods

@@ -235,6 +235,7 @@ class PlayScene: SKScene, GameScene {
         let sequence: SKAction = SKAction.sequence([SKAction.wait(forDuration: animationDuration),
                                                     SKAction.run {
                                                         note.removeFromParent()
+                                                        self.finish()
             }])
         
         note.run(sequence)
