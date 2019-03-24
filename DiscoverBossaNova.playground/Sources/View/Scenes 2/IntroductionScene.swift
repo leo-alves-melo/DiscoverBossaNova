@@ -16,7 +16,10 @@ class IntroductionScene: SKScene, GameScene {
     private var textList: [String] = ["Brazil is a country full of beauties",
                                       "All these beauties inspired our artists in different ways",
                                       "That’s when Bossa Nova was created, a new music style mixing Samba and Jazz",
-                                      "Helps Tom Jobim to compose \"Garota de Ipanema\" "]
+                                      "Bossa Nova talks about nature, love and feelings",
+                                      "One of the most important compositors was Tom Jobim",
+                                      "Helps Tom Jobim to compose \"Garota de Ipanema\"",
+                                      "Tap on the color buttons when they get close to the origin"]
     private var textListIndex: Int = 0
     private let openingDuration: Double = 2.0
     var gameSceneDelegate: SceneCompletionDelegate?
@@ -116,10 +119,14 @@ class IntroductionScene: SKScene, GameScene {
         
         self.textListIndex += 1
         
+        if self.textListIndex == 4 {
+            self.setupTomJobimImage()
+        }
+        
         if self.textListIndex == self.textList.count - 1 {
             self.textLabel.text = self.textList[self.textListIndex]
             self.nextButton.texture = SKTexture(imageNamed: "PlayButton")
-            self.setupTomJobimImage()
+            
         } else if self.textListIndex == self.textList.count {
             self.gameSceneDelegate?.didComplete(with: nil)
         } else {

@@ -190,16 +190,33 @@ class PlayScene: SKScene, GameScene {
             if touchedNode == self.greenButton {
                 if let closeNode: SKNode = self.playableNotes.first(where: { (node) -> Bool in
                     let xPositionCondition: Bool = node.position.x == self.greenButtonXPosition
-                    let yPositionCondition: Bool = node.position.y < self.buttonsYPosition + self.blueButton.size.height/2
+                    let yPositionCondition: Bool = node.position.y < self.buttonsYPosition + self.blueButton.size.height/2 && node.position.y > self.buttonsYPosition - self.blueButton.size.height/2
                     
-                    return xPositionCondition
+                    return xPositionCondition && yPositionCondition
                 }) {
-                    
+                    self.increaseScore()
+                    self.disappear(note: closeNode)
                 }
             } else if touchedNode == self.yellowButton {
-                
+                if let closeNode: SKNode = self.playableNotes.first(where: { (node) -> Bool in
+                    let xPositionCondition: Bool = node.position.x == self.yellowButtonXPosition
+                    let yPositionCondition: Bool = node.position.y < self.buttonsYPosition + self.blueButton.size.height/2 && node.position.y > self.buttonsYPosition - self.blueButton.size.height/2
+                    
+                    return xPositionCondition && yPositionCondition
+                }) {
+                    self.increaseScore()
+                    self.disappear(note: closeNode)
+                }
             } else if touchedNode == self.blueButton {
-                
+                if let closeNode: SKNode = self.playableNotes.first(where: { (node) -> Bool in
+                    let xPositionCondition: Bool = node.position.x == self.blueButtonXPosition
+                    let yPositionCondition: Bool = node.position.y < self.buttonsYPosition + self.blueButton.size.height/2 && node.position.y > self.buttonsYPosition - self.blueButton.size.height/2
+                    
+                    return xPositionCondition && yPositionCondition
+                }) {
+                    self.increaseScore()
+                    self.disappear(note: closeNode)
+                }
             }
         }
     }
