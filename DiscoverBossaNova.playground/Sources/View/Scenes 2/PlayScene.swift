@@ -11,7 +11,7 @@ class PlayScene: SKScene, GameScene {
     private let yellowButton: SKSpriteNode = SKSpriteNode(imageNamed: "YellowButton")
     private let blueButton: SKSpriteNode = SKSpriteNode(imageNamed: "BlueButton")
     private let scoreLabel: SKLabelNode = SKLabelNode(text: "0")
-    //private let song = SKAction.playSoundFileNamed("GarotaDeIpanema.m4a", waitForCompletion: false)
+    private let song = SKAction.playSoundFileNamed("GarotaDeIpanema.mp3", waitForCompletion: false)
     
     // MARK: - Properties
     
@@ -45,6 +45,7 @@ class PlayScene: SKScene, GameScene {
         self.setupBoardButtons()
         self.setupScore()
         self.setupNotesSequence()
+        self.setupSong()
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -142,11 +143,44 @@ class PlayScene: SKScene, GameScene {
     }
     
     private func setupNotesSequence() {
-        self.create(note: .green)
+        // Base
+        self.create(note: .green, after: 0)
+        self.create(note: .yellow, after: 0.5)
+        self.create(note: .green, after: 1)
+        self.create(note: .yellow, after: 1.25)
+        self.create(note: .yellow, after: 1.75)
+        self.create(note: .green, after: 2)
+        self.create(note: .yellow, after: 2.5)
+        self.create(note: .green, after: 3)
+        self.create(note: .yellow, after: 3.25)
+        self.create(note: .yellow, after: 3.75)
+        self.create(note: .green, after: 4)
+        self.create(note: .blue, after: 4.5)
+        self.create(note: .green, after: 5)
+        self.create(note: .blue, after: 5.25)
+        self.create(note: .blue, after: 5.75)
+        self.create(note: .yellow, after: 6)
+        self.create(note: .blue, after: 6.5)
+        self.create(note: .yellow, after: 7)
+        self.create(note: .blue, after: 7.25)
+        self.create(note: .blue, after: 7.75)
+        
+        // Melody
+        
+        
+    }
+    
+    private func create(note: Notes, after time: TimeInterval) {
+        let sequence: SKAction = SKAction.sequence([SKAction.wait(forDuration: time), SKAction.run {
+            self.create(note: note)
+            }])
+        
+        self.run(sequence)
     }
     
     private func setupSong() {
-        
+        let sequence: SKAction = SKAction.sequence([SKAction.wait(forDuration: 4.5), self.song])
+        self.run(sequence)
     }
     
     private func setupScore() {
@@ -235,7 +269,7 @@ class PlayScene: SKScene, GameScene {
         let sequence: SKAction = SKAction.sequence([SKAction.wait(forDuration: animationDuration),
                                                     SKAction.run {
                                                         note.removeFromParent()
-                                                        self.finish()
+                                                        
             }])
         
         note.run(sequence)
