@@ -203,7 +203,7 @@ class PlayScene: SKScene, GameScene {
         self.create(note: .yellow, after: 20.75)
         self.create(note: .yellow, after: 21)
         self.create(note: .yellow, after: 21.5)
-        self.create(note: .yellow, after: 21.75)
+        self.create(note: .green, after: 21.75)
         
         self.create(note: .blue, after: 22)
         self.create(note: .blue, after: 22.5)
@@ -225,6 +225,95 @@ class PlayScene: SKScene, GameScene {
         self.create(note: .green, after: 27.5)
         self.create(note: .yellow, after: 27.75)
         
+        // Melody 2
+        self.create(note: .yellow, after: 32)
+        self.create(note: .blue, after: 34.36)
+        self.create(note: .yellow, after: 34.75)
+        self.create(note: .green, after: 35.12)
+        self.create(note: .blue, after: 35.5)
+        self.create(note: .yellow, after: 35.88)
+        self.create(note: .green, after: 36.25)
+        self.create(note: .yellow, after: 38)
+        
+        self.create(note: .yellow, after: 40)
+        self.create(note: .blue, after: 42.36)
+        self.create(note: .yellow, after: 42.75)
+        self.create(note: .green, after: 43.12)
+        self.create(note: .blue, after: 43.5)
+        self.create(note: .yellow, after: 43.88)
+        self.create(note: .green, after: 44.25)
+        self.create(note: .yellow, after: 46)
+        
+        self.create(note: .yellow, after: 48)
+        self.create(note: .blue, after: 50.36)
+        self.create(note: .yellow, after: 50.75)
+        self.create(note: .green, after: 51.12)
+        self.create(note: .blue, after: 51.5)
+        self.create(note: .yellow, after: 51.88)
+        self.create(note: .green, after: 52.25)
+        self.create(note: .yellow, after: 54)
+        
+        self.create(note: .green, after: 55.25)
+        self.create(note: .yellow, after: 55.64)
+        self.create(note: .blue, after: 56)
+        self.create(note: .green, after: 56.36)
+        self.create(note: .yellow, after: 56.75)
+        self.create(note: .blue, after: 57.13)
+        self.create(note: .green, after: 57.5)
+        self.create(note: .yellow, after: 57.75)
+        self.create(note: .blue, after: 58)
+        self.create(note: .blue, after: 58.75)
+        
+        self.create(note: .blue, after: 60)
+        self.create(note: .green, after: 60.36)
+        self.create(note: .yellow, after: 60.75)
+        self.create(note: .blue, after: 61.13)
+        self.create(note: .green, after: 61.5)
+        self.create(note: .yellow, after: 61.75)
+        self.create(note: .blue, after: 62)
+        self.create(note: .blue, after: 62.75)
+        
+        // Melody Intro
+        self.create(note: .blue, after: 64)
+        self.create(note: .blue, after: 64.5)
+        self.create(note: .yellow, after: 64.75)
+        self.create(note: .yellow, after: 65)
+        self.create(note: .yellow, after: 65.5)
+        self.create(note: .green, after: 65.75)
+        self.create(note: .blue, after: 66)
+        self.create(note: .blue, after: 66.5)
+        self.create(note: .yellow, after: 66.75)
+        self.create(note: .yellow, after: 67)
+        self.create(note: .yellow, after: 67.25)
+        self.create(note: .green, after: 67.5)
+        self.create(note: .blue, after: 67.75)
+        self.create(note: .blue, after: 68.25)
+        self.create(note: .yellow, after: 68.75)
+        self.create(note: .yellow, after: 69)
+        self.create(note: .yellow, after: 69.5)
+        self.create(note: .green, after: 69.75)
+        
+        self.create(note: .blue, after: 70)
+        self.create(note: .blue, after: 70.5)
+        self.create(note: .yellow, after: 70.75)
+        self.create(note: .yellow, after: 71)
+        self.create(note: .yellow, after: 71.25)
+        self.create(note: .green, after: 71.5)
+        self.create(note: .blue, after: 71.75)
+        self.create(note: .blue, after: 72.25)
+        self.create(note: .yellow, after: 72.75)
+        self.create(note: .yellow, after: 73)
+        self.create(note: .yellow, after: 73.5)
+        self.create(note: .green, after: 73.75)
+        self.create(note: .blue, after: 74)
+        self.create(note: .blue, after: 74.5)
+        self.create(note: .yellow, after: 74.75)
+        self.create(note: .yellow, after: 75)
+        self.create(note: .yellow, after: 75.25)
+        self.create(note: .green, after: 75.5)
+        self.create(note: .yellow, after: 75.75)
+        
+        
     }
     
     private func create(note: Notes, after time: TimeInterval) {
@@ -236,7 +325,7 @@ class PlayScene: SKScene, GameScene {
     }
     
     private func setupSong() {
-        let sequence: SKAction = SKAction.sequence([SKAction.wait(forDuration: 4.5), self.song])
+        let sequence: SKAction = SKAction.sequence([SKAction.wait(forDuration: 4.3), self.song])
         self.run(sequence)
     }
     
