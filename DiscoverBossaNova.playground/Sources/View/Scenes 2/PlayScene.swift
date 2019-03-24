@@ -48,7 +48,7 @@ class PlayScene: SKScene, GameScene {
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        for touch in touches {
+        if let touch: UITouch = touches.first {
             let positionInScene: CGPoint = touch.location(in: self)
             let touchedNode: SKNode = self.atPoint(positionInScene)
             
@@ -184,8 +184,47 @@ class PlayScene: SKScene, GameScene {
             if touchedNode.position.y < self.buttonsYPosition + self.blueButton.size.height/2,
                 touchedNode.position.y > self.buttonsYPosition - self.blueButton.size.height/2 {
                 self.increaseScore()
-                touchedNode.removeFromParent()
+                self.disappear(note: touchedNode)
+            }
+        } else {
+            if touchedNode == self.greenButton {
+                if let closeNode: SKNode = self.playableNotes.first(where: { (node) -> Bool in
+                    let xPositionCondition: Bool = node.position.x == self.greenButtonXPosition
+                    let yPositionCondition: Bool = node.position.y < self.buttonsYPosition + self.blueButton.size.height/2
+                    
+                    return xPositionCondition
+                }) {
+                    
+                }
+            } else if touchedNode == self.yellowButton {
+                
+            } else if touchedNode == self.blueButton {
+                
             }
         }
+    }
+    
+    private func disappear(note: SKNode) {
+        
+        note.removeAllActions()
+        
+        let animationDuration: TimeInterval = 0.5
+        let fadeAlpha: SKAction = SKAction.fadeAlpha(to: 0, duration: animationDuration)
+        let increaseSize: SKAction = SKAction.scale(to: 2, duration: animationDuration)
+        note.run(fadeAlpha)
+        note.run(increaseSize)
+
+        
+        let sequence: SKAction = SKAction.sequence([SKAction.wait(forDuration: animationDuration),
+                                                    SKAction.run {
+                                                        note.removeFromParent()
+            }])
+        
+        note.run(sequence)
+        
+    }
+    
+    private func finish() {
+        self.gameSceneDelegate?.didComplete(with: Double(exactly: self.score))
     }
 }
