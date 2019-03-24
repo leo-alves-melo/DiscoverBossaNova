@@ -9,14 +9,12 @@ class ClosingScene: SKScene, GameScene {
     private let textBackground: SKShapeNode = SKShapeNode()
     private let nextButton: SKSpriteNode = SKSpriteNode(imageNamed: "NextButton")
     private let tomJobimImage: SKSpriteNode = SKSpriteNode(imageNamed: "TomJobim")
-    private let sound = SKAction.playSoundFileNamed("Cena1.m4a", waitForCompletion: false)
     
     var score: Int = 0
     
     // MARK: - Properties
     
-    private var textList: [String] = ["Awesome! You got good points! And better: the song became a huge success!",
-                                      "It became the second most recovered song of all time! Frank Sinatra, Amy Winehouse and Madonna had versions of it",
+    private var textList: [String] = ["It became the second most recovered song of all time! Frank Sinatra, Amy Winehouse and Madonna had versions of it",
                                       "\"Medicine, law, business, engineering, these are noble pursuits and necessary to sustain life. But poetry, beauty, romance, love, these are what we stay alive for\", Dead Poets Society",
                                       "Play again?"]
     private var textListIndex: Int = 0
@@ -39,7 +37,7 @@ class ClosingScene: SKScene, GameScene {
     }
     
     override func didMove(to view: SKView) {
-        self.setupSound()
+        self.setupText()
         self.setupBackground()
         self.setupTextBackground()
         self.setupLabel()
@@ -62,8 +60,9 @@ class ClosingScene: SKScene, GameScene {
     
     // MARK: - Private methods
     
-    private func setupSound() {
-        self.run(self.sound)
+    private func setupText() {
+
+        self.textList.insert("Awesome! You got \(self.score) points! And better: the song became a huge success!", at: 0)
     }
     
     private func createBackground() {

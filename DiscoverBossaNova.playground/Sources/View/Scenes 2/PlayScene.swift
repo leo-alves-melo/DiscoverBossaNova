@@ -16,7 +16,7 @@ class PlayScene: SKScene, GameScene {
     private let yellowButton: SKSpriteNode = SKSpriteNode(imageNamed: "YellowButton")
     private let blueButton: SKSpriteNode = SKSpriteNode(imageNamed: "BlueButton")
     private let scoreLabel: SKLabelNode = SKLabelNode(text: "0")
-    private let song = SKAction.playSoundFileNamed("GarotaDeIpanema.mp3", waitForCompletion: false)
+    private let song = SKAction.playSoundFileNamed("GarotaDeIpanema.mp3", waitForCompletion: true)
     
     // MARK: - Properties
     
@@ -63,6 +63,7 @@ class PlayScene: SKScene, GameScene {
                 self.setupScore()
                 self.setupSong()
                 self.disappearLevelDifficulty()
+                self.setupCountDownForFinish()
                 
                 if touchedNode == self.easyDifficultyButton {
                     self.setupEasyNotesSequence()
@@ -78,6 +79,15 @@ class PlayScene: SKScene, GameScene {
     }
     
     // MARK: - Private methods
+    
+    private func setupCountDownForFinish() {
+        let sequence: SKAction = SKAction.sequence([SKAction.wait(forDuration: self.song.duration),
+                                                    SKAction.run {
+                                                        self.finish()
+            }])
+        
+        self.run(sequence)
+    }
     
     private func setupBackground() {
         self.backgroundColor = UIColor.white
@@ -108,7 +118,7 @@ class PlayScene: SKScene, GameScene {
                                                        y: self.chooseDifficultyBackground.position.y)
         
         self.easyDifficultyButton.position = CGPoint(x: self.chooseDifficultyBackground.position.x,
-                                                     y: self.chooseDifficultyBackground.position.y - 80)
+                                                     y: self.chooseDifficultyBackground.position.y - 70)
         
         self.addChild(self.chooseDifficultyBackground)
         self.addChild(self.chooseDifficultyTitleLabel)
@@ -680,7 +690,10 @@ class PlayScene: SKScene, GameScene {
         let increaseSize: SKAction = SKAction.scale(to: 2, duration: animationDuration)
         note.run(fadeAlpha)
         note.run(increaseSize)
-
+        
+        self.playableNotes.removeAll { (node) -> Bool in
+            return node == note
+        }
         
         let sequence: SKAction = SKAction.sequence([SKAction.wait(forDuration: animationDuration),
                                                     SKAction.run {

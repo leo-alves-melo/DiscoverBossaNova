@@ -9,7 +9,7 @@ class IntroductionScene: SKScene, GameScene {
     private let textBackground: SKShapeNode = SKShapeNode()
     private let nextButton: SKSpriteNode = SKSpriteNode(imageNamed: "NextButton")
     private let tomJobimImage: SKSpriteNode = SKSpriteNode(imageNamed: "TomJobim")
-    private let sound = SKAction.playSoundFileNamed("Cena1.m4a", waitForCompletion: false)
+    private let sound = SKAction.playSoundFileNamed("Cena1.mp3", waitForCompletion: false)
     
     // MARK: - Properties
     
